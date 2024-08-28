@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ericsson.nms</groupId>
+        <artifactId>integration</artifactId>
+        <version>15.2.0.30</version>
+    </parent>
+
+    <groupId>com.ericsson.cifwk.images</groupId>
+    <artifactId>ERICide-base_CXP9032018</artifactId>
+    <version>1.0.3-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>[${project.artifactId}] JEE6 Project</name>
+
+    <properties>
+        <os.name>Ubuntu</os.name>
+        <os.version>14.04</os.version>
+        <os.arch>x86_64</os.arch>
+        <os.groupID>com.ericsson.cifwk.iso</os.groupID>
+        <os.artifactID>ubuntu-server</os.artifactID>
+        <os.repoversion>14.04</os.repoversion>
+        <os.type>iso</os.type>
+        <packaging.type>qcow2</packaging.type>
+        <media.category>image</media.category>
+        <publish_artifact>true</publish_artifact>
+        <build.type>create</build.type>
+        <set.rootpass>true</set.rootpass>
+        <set.disk>true</set.disk>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.ericsson.oss.images</groupId>
+            <artifactId>ERICseediso</artifactId>
+            <version>1.0.1</version>
+            <type>iso</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>/dev/shm/compressed_${project.artifactId}_${project.version}.qcow2</file>
+                                    <type>qcow2</type>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>buildImage</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.ericsson.maven.plugins</groupId>
+                        <artifactId>cifwkimagebuilder-maven-plugin</artifactId>
+                        <version>1.0.7</version>
+                        <executions>
+                            <execution>
+                                <id>build</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>buildImage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+  <scm>
+    <developerConnection>scm:git:ssh://gerrit.ericsson.se:29418/OSS/com.ericsson.cifwk/ide-base</developerConnection>
+    <connection>scm:git:ssh://gerrit.ericsson.se:29418/OSS/com.ericsson.cifwk/ide-base</connection>
+    <tag>ide-base-1.0.2</tag>
+  </scm>
+</project>
